@@ -22,6 +22,7 @@ async function run()
         await client.connect();
         const toolCollection=client.db('toolsList').collection('tools')
         const bookingCollection=client.db('bookingList').collection('bookings')
+        const commentsCollection=client.db('commentsList').collection('comments')
         app.get('/tools',async(req,res)=>{
             const query={};
             const cursor=toolCollection.find(query)
@@ -39,6 +40,26 @@ async function run()
             const result=await bookingCollection.insertOne(newTool);
             res.send(result)
         })
+        app.get('/booking',async(req,res)=>{
+            const email=req.query.email;
+            const query={email:email};
+            const cursor=bookingCollection.find(query)
+            const showBooking=await cursor.toArray();
+            res.send(showBooking);
+        })
+        app.post('/comments',async(req,res)=>{
+            const comments=req.body;
+            const resultComments=await commentsCollection.insertOne(comments);
+            res.send(resultComments)
+        })
+        app.get('/comments',async(req,res)=>{
+            const query={};
+            const cursor=commentsCollection.find(query)
+            const comments=await cursor.toArray();
+            res.send(comments);
+        })
+        
+
     }
     finally
     {
