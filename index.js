@@ -29,6 +29,21 @@ async function run()
             const tools=await cursor.toArray();
             res.send(tools);
         })
+        app.put('/tools/:id',async(req,res)=>
+        {
+          const id=req.params.id;
+          const updateQuantity=req.body;
+          const filter={_id:ObjectId(id)}
+          const options={upsert:true}
+          const updateDoc={
+            $set:
+            {
+                minimum:updateQuantity.quantity,
+            }
+          };
+          const resultQuantity =await toolCollection.updateOne(filter,updateDoc,options)
+          res.send(resultQuantity)
+        })
         app.get('/purchase/:id',async(req,res)=>{
             const id=req.params.id
             const query={_id:ObjectId(id)}
