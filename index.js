@@ -23,6 +23,7 @@ async function run()
         const toolCollection=client.db('toolsList').collection('tools')
         const bookingCollection=client.db('bookingList').collection('bookings')
         const commentsCollection=client.db('commentsList').collection('comments')
+        const userProfileList=client.db('userProfile').collection('profile')
         app.get('/tools',async(req,res)=>{
             const query={};
             const cursor=toolCollection.find(query)
@@ -73,7 +74,11 @@ async function run()
             const comments=await cursor.toArray();
             res.send(comments);
         })
-        
+        app.post('/profile',async(req,res)=>{
+            const profile=req.body;
+            const resultProfile=await userProfileList.insertOne(profile);
+            res.send(resultProfile)
+        })
 
     }
     finally
