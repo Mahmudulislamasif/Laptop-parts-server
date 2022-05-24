@@ -21,9 +21,9 @@ async function run()
     try{
         await client.connect();
         const toolCollection=client.db('toolsList').collection('tools')
-        const bookingCollection=client.db('bookingList').collection('bookings')
-        const commentsCollection=client.db('commentsList').collection('comments')
-        const userProfileList=client.db('userProfile').collection('profile')
+        const bookingCollection=client.db('toolsList').collection('bookings')
+        const commentsCollection=client.db('toolsList').collection('comments')
+        const userProfileList=client.db('toolsList').collection('profile')
         app.get('/tools',async(req,res)=>{
             const query={};
             const cursor=toolCollection.find(query)
