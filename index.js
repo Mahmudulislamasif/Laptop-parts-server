@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
 require('dotenv').config();
 const port=process.env.PORT||5000
 const app=express()
@@ -24,26 +25,51 @@ async function run()
         const bookingCollection=client.db('toolsList').collection('bookings')
         const commentsCollection=client.db('toolsList').collection('comments')
         const userProfileList=client.db('toolsList').collection('profile')
+        const userCollection=client.db('toolsList').collection('users')
         app.get('/tools',async(req,res)=>{
             const query={};
             const cursor=toolCollection.find(query)
             const tools=await cursor.toArray();
             res.send(tools);
         })
-        app.put('/tools/:id',async(req,res)=>
-        {
-          const id=req.params.id;
-          const updateQuantity=req.body;
-          const filter={_id:ObjectId(id)}
-          const options={upsert:true}
-          const updateDoc={
-            $set:
-            {
-                minimum:updateQuantity.quantity,
-            }
-          };
-          const resultQuantity =await toolCollection.updateOne(filter,updateDoc,options)
-          res.send(resultQuantity)
+        // app.put('/tools/:id',async(req,res)=>
+        // {
+        //   const id=req.params.id;
+        //   const updateQuantity=req.body;
+        //   const filter={_id:ObjectId(id)}
+        //   const options={upsert:true}
+        //   const updateDoc={
+        //     $set:
+        //     {
+        //         minimum:updateQuantity.quantity,
+        //     }
+        //   };
+        //   const resultQuantity =await toolCollection.updateOne(filter,updateDoc,options)
+        //   res.send(resultQuantity)
+        // })
+        app.get('/user',async(req,res)=>{
+            const users =await userCollection.find().toArray();
+            res.send(users)
+        })
+        app.put('/user/admin/:email',async(req,res)=>{
+            const email=req.params.email;
+            const filter={email:email};
+            const updateDoc={
+                $set:{role:'admin'},
+              };
+              const userResult=await userCollection.updateOne(filter,updateDoc);
+              res.send(userResult)
+        })
+        app.put('/user/:email',async(req,res)=>{
+            const email=req.params.email;
+            const filter={email:email};
+            const user=req.body;
+            const options={upsert:true};
+            const updateDoc={
+                $set:user,
+              };
+              const userResult=await userCollection.updateOne(filter,updateDoc,options);
+              res.send(userResult)
         })
         app.get('/purchase/:id',async(req,res)=>{
             const id=req.params.id
