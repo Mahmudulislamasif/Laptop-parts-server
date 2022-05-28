@@ -49,6 +49,13 @@ async function run()
             const resultItem=await toolCollection.insertOne(toolsPost);
             res.send(resultItem)
         })
+        app.delete('/tools/:id',async(req,res)=>
+        {
+            const id=req.params.id;
+            const query={_id:ObjectId(id)};
+            const result=await toolCollection.deleteOne(query)
+            res.send(result);
+        })
         // app.put('/tools/:id',async(req,res)=>
         // {
         //   const id=req.params.id;
