@@ -112,6 +112,13 @@ async function run()
             const showBooking=await cursor.toArray();
             res.send(showBooking);
         })
+        app.get('/collectorder',async(req,res)=>{
+            const query={};
+            const cursor=bookingCollection.find(query)
+            const showBookingAll=await cursor.toArray();
+            res.send(showBookingAll);
+        })
+
         app.post('/comments',async(req,res)=>{
             const comments=req.body;
             const resultComments=await commentsCollection.insertOne(comments);
