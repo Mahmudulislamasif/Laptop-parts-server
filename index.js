@@ -12,13 +12,13 @@ const corsConfig = {
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
-app.use(cors({origin:'https://final-hero-project.web.app/'}))
-// app.options("*", cors(corsConfig))
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*")
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,authorization")
-//     next()
-// })
+app.use(cors(corsConfig))
+app.options("*", cors(corsConfig))
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,authorization")
+    next()
+})
 
 app.use(express.json())
 
