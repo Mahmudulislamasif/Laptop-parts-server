@@ -6,8 +6,7 @@ require('dotenv').config();
 const port=process.env.PORT||5000
 const app=express()
 
-//middleware
-// app.use(cors({origin:"https://final-hero-project.web.app/"}))
+
 const corsConfig = {
     origin: '*',
     credentials: true,
