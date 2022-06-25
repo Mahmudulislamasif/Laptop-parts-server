@@ -12,7 +12,7 @@ app.use(express.json())
 //     credentials: true,
 //     methods: ['GET', 'POST', 'PUT', 'DELETE']
 // }
-app.use(cors({origin:"https://final-hero-project.web.app"}))
+app.use(cors({origin:"https://final-hero-project.web.app/"}))
 // app.options("*", cors(corsConfig))
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*")
