@@ -110,7 +110,7 @@ async function run()
             const booking= await bookingCollection.findOne(query)
             res.send(booking)
         })
-        app.patch('/booking/:id', async(req, res) =>{
+        app.put('/booking/:id', async(req, res) =>{
             const id  = req.params.id;
             const payment = req.body;
             const filter = {_id: ObjectId(id)};
